@@ -41,6 +41,7 @@
       "category": "Databases",
       "items": [
         { "name": "MongoDB", "level": "production" },
+        { "name": "PostgreSQL", "level": "production" },
         { "name": "MySQL", "level": "production" }
       ]
     },
