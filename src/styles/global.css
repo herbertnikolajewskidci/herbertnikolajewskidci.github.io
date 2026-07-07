@@ -673,6 +673,12 @@ h3 {
   margin-bottom: 1.5rem;
 }
 
+.contact-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
 .contact-links {
   display: grid;
   gap: 1rem;
