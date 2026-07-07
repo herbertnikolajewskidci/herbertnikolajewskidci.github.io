@@ -1,0 +1,45 @@
+---
+interface Props {
+  title: string;
+  tagline: string;
+  summary: string;
+}
+
+const { title, tagline, summary } = Astro.props;
+---
+
+<header class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div class="hero-content">
+        <p class="hero-eyebrow">Software Engineer & DevOps</p>
+        <h1>{title}</h1>
+        <p class="hero-tagline">{tagline}</p>
+        <p class="hero-summary">{summary}</p>
+        <div class="hero-actions">
+          <a href="#experience" class="button button-primary">View experience</a>
+          <a href="#contact" class="button button-secondary">Get in touch</a>
+        </div>
+      </div>
+      <div class="hero-visual" aria-hidden="true">
+        <div class="terminal">
+          <div class="terminal-header">
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-dot"></span>
+            <span class="terminal-title">status</span>
+          </div>
+          <div class="terminal-body">
+            <p><span class="terminal-prompt">$</span> whoami</p>
+            <p class="terminal-output">herbert_nikolajewski</p>
+            <p><span class="terminal-prompt">$</span> current_focus</p>
+            <p class="terminal-output">self-hosted infrastructure, k8s, terraform</p>
+            <p><span class="terminal-prompt">$</span> location</p>
+            <p class="terminal-output">regensburg, germany · remote/hybrid</p>
+            <p><span class="terminal-prompt">$</span> <span class="terminal-cursor">_</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

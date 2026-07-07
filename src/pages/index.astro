@@ -1,193 +1,30 @@
 ---
-import '../styles/global.css';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+import SkillsInteractive from '../components/SkillsInteractive.astro';
+import Contact from '../components/Contact.astro';
+import Footer from '../components/Footer.astro';
 
-const title = "Herbert Nikolajewski · Software Engineer & DevOps";
-const description = "Full-stack developer with a DevOps focus. TypeScript, React, Node.js, Kubernetes, Terraform, Ansible. Regensburg, Germany.";
-
-const experience = [
-  {
-    role: "DevOps Engineer",
-    company: "heycare",
-    location: "Remote",
-    date: "Feb 2026 – Jun 2026",
-    highlights: [
-      "Infrastructure-as-Code with Terraform & Ansible on Hetzner",
-      "Self-hosted Keycloak PoC for render.com migration",
-      "Full-stack auth-service integration with TypeScript & Node.js",
-      "Streamlined deployment workflows for the engineering team"
-    ]
-  },
-  {
-    role: "Full-Stack Developer",
-    company: "Allgeier Public",
-    location: "Landesamt für Finanzen, Regensburg (Hybrid)",
-    date: "Aug 2024 – Jan 2026",
-    highlights: [
-      "Developed and optimized internal applications for Bavarian authorities",
-      "Refactored CSS codebase improving frontend maintainability & load times",
-      "Standardized Docker-Compose dev environment boosting team productivity",
-      "Contributed to Kubernetes orchestration and deployment optimization"
-    ]
-  },
-  {
-    role: "DevOps Engineer (Part-time)",
-    company: "Seibel GmbH",
-    location: "Remote",
-    date: "Oct 2022 – Present",
-    highlights: [
-      "Migrated legacy K8s cluster DigitalOcean → Hetzner",
-      "Cut infrastructure costs from €1,500+/month to <€100/month",
-      "Manage 200+ client websites across K8s and 7+ standalone servers",
-      "Set up GPU server (8× NVIDIA V100) for self-hosted LLMs"
-    ]
-  },
-  {
-    role: "Full-Stack Lecturer (MERN)",
-    company: "DCI Digital Career Institute",
-    location: "Germany (Remote)",
-    date: "Oct 2022 – Jul 2024",
-    highlights: [
-      "Trained 100+ students in full-stack MERN development",
-      "Designed interactive curricula and mentored final projects",
-      "Achieved 95% project completion rate"
-    ]
-  },
-  {
-    role: "Full-Stack Developer",
-    company: "09 Media GmbH",
-    location: "Regensburg (Hybrid)",
-    date: "Oct 2020 – Sept 2022",
-    highlights: [
-      "Migrated WordPress to Node.js/Express/EJS improving performance & SEO by 25%",
-      "Automated data-entry workflows cutting daily work from hours to minutes",
-      "Ensured 99.9% system availability for webservers and workstations"
-    ]
-  }
-];
-
-const skills = [
-  { category: "Languages", items: "TypeScript, JavaScript, Node.js, Bash" },
-  { category: "Frontend", items: "React.js, AstroJS, EJS, HTML/CSS" },
-  { category: "Backend", items: "Express.js, MERN Stack, REST APIs" },
-  { category: "Cloud & DevOps", items: "Docker, Docker-Compose, Kubernetes, CI/CD, GitHub Actions, Terraform, Ansible" },
-  { category: "Databases", items: "MongoDB, MySQL" },
-  { category: "Other", items: "Linux, Automation, Web Performance, Agile" }
-];
+const title = 'Herbert Nikolajewski · Software Engineer & DevOps';
+const description =
+  'Full-stack developer with a DevOps focus. I build reliable applications and the infrastructure that runs them. TypeScript, Kubernetes, Terraform, Ansible.';
 ---
 
-<!doctype html>
-<html lang="de">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <meta name="description" content={description} />
-    <title>{title}</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
-  </head>
-  <body>
-    <!-- Hero -->
-    <section class="hero">
-      <div class="container">
-        <h1>Herbert Nikolajewski</h1>
-        <p class="tagline">Software Engineer · DevOps & Cloud Infrastructure</p>
-        <p class="summary">
-          Full-stack developer with a DevOps focus, building reliable systems and the applications 
-          that run on them. I specialize in TypeScript, React, Node.js, Kubernetes, Docker, Terraform, and Ansible.
-        </p>
-        <div class="cta">
-          <a href="#experience" class="btn btn-primary">Experience</a>
-          <a href="#contact" class="btn btn-secondary">Get in Touch</a>
-        </div>
-      </div>
-    </section>
+<BaseLayout title={title} description={description}>
+  <main id="main">
+    <Hero
+      title="Herbert Nikolajewski"
+      tagline="I build software and the infrastructure it runs on."
+      summary="Full-stack developer with a DevOps focus. I like making systems that are fast, maintainable, and cost-effective — from TypeScript frontends to self-hosted Kubernetes clusters. Based in Regensburg, Germany."
+    />
 
-    <!-- Experience -->
-    <section id="experience">
-      <div class="container">
-        <h2>Experience</h2>
-        <div class="experience-list">
-          {experience.map(job => (
-            <div class="experience-item">
-              <div class="meta">
-                <span class="company">{job.role} @ {job.company}</span>
-                <span class="date">{job.date}</span>
-              </div>
-              <div style="color: var(--color-text-muted); font-size: 0.9rem;">{job.location}</div>
-              <ul>
-                {job.highlights.map(item => (
-                  <li>{item}</li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <ExperienceTimeline />
 
-    <!-- Skills -->
-    <section id="skills">
-      <div class="container">
-        <h2>Skills & Tech Stack</h2>
-        <div class="skills-grid">
-          {skills.map(skill => (
-            <div class="skill-category">
-              <h3>{skill.category}</h3>
-              <p>{skill.items}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    </section>
+    <SkillsInteractive />
 
-    <!-- Education -->
-    <section id="education">
-      <div class="container">
-        <h2>Education</h2>
-        <div class="experience-list">
-          <div class="experience-item">
-            <div class="meta">
-              <span class="company">Bachelor of Arts (B.A.), Protestant Theology</span>
-              <span class="date">Oct 2017 – Sept 2023</span>
-            </div>
-            <div style="color: var(--color-text-muted); font-size: 0.9rem;">Universität Regensburg, Germany</div>
-          </div>
-        </div>
-      </div>
-    </section>
+    <Contact />
+  </main>
 
-    <!-- Contact -->
-    <section id="contact">
-      <div class="container">
-        <h2>Contact</h2>
-        <div class="contact-grid">
-          <div class="contact-item">
-            <strong>Email</strong>
-            <a href="mailto:herby.nik@googlemail.com">herby.nik@googlemail.com</a>
-          </div>
-          <div class="contact-item">
-            <strong>LinkedIn</strong>
-            <a href="https://linkedin.com/in/herbert-nikolajewski" target="_blank" rel="noopener">linkedin.com/in/herbert-nikolajewski</a>
-          </div>
-          <div class="contact-item">
-            <strong>GitHub</strong>
-            <a href="https://github.com/herbertnikolajewskidci" target="_blank" rel="noopener">herbertnikolajewskidci</a>
-          </div>
-          <div class="contact-item">
-            <strong>Location</strong>
-            <span style="color: var(--color-text-muted);">Regensburg, Germany · Remote / Hybrid</span>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <footer>
-      <div class="container">
-        <p>© {new Date().getFullYear()} Herbert Nikolajewski · Built with Astro</p>
-      </div>
-    </footer>
-  </body>
-</html>
+  <Footer />
+</BaseLayout>

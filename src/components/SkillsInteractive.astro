@@ -1,0 +1,65 @@
+---
+import skillsData from '../content/skills.json';
+
+const { categories } = skillsData;
+
+const levelLabels: Record<string, string> = {
+  production: 'In production',
+  teaching: 'Taught & used',
+  experimental: 'Experimenting',
+};
+---
+
+<section id="skills" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Toolkit</p>
+      <h2>Skills & Technologies</h2>
+    </div>
+
+    <div class="skills-filter reveal" role="group" aria-label="Filter skills by experience level">
+      <button type="button" class="filter-button is-active" data-filter="all">All</button>
+      <button type="button" class="filter-button" data-filter="production">In production</button>
+      <button type="button" class="filter-button" data-filter="teaching">Taught & used</button>
+      <button type="button" class="filter-button" data-filter="experimental">Experimenting</button>
+    </div>
+
+    <div class="skills-list">
+      {
+        categories.map((category, categoryIndex) => (
+          <div class="skill-category reveal" style={`--item-index: ${categoryIndex}`}>
+            <h3>{category.category}</h3>
+            <ul class="skill-tags">
+              {category.items.map((item) => (
+                <li class="skill-tag" data-level={item.level}>
+                  <span class="skill-name">{item.name}</span>
+                  <span class="skill-level">{levelLabels[item.level]}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-button');
+    const tags = document.querySelectorAll<HTMLLIElement>('.skill-tag');
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const filter = button.dataset.filter ?? 'all';
+
+        buttons.forEach((btn) => btn.classList.remove('is-active'));
+        button.classList.add('is-active');
+
+        tags.forEach((tag) => {
+          const level = tag.dataset.level ?? '';
+          const matches = filter === 'all' || level === filter;
+          tag.classList.toggle('is-hidden', !matches);
+        });
+      });
+    });
+  </script>
+</section>

@@ -1,0 +1,57 @@
+{
+  "categories": [
+    {
+      "category": "Languages",
+      "items": [
+        { "name": "TypeScript", "level": "production" },
+        { "name": "JavaScript", "level": "production" },
+        { "name": "Node.js", "level": "production" },
+        { "name": "Bash", "level": "production" }
+      ]
+    },
+    {
+      "category": "Frontend",
+      "items": [
+        { "name": "React.js", "level": "production" },
+        { "name": "Astro", "level": "production" },
+        { "name": "EJS", "level": "production" },
+        { "name": "HTML/CSS", "level": "production" }
+      ]
+    },
+    {
+      "category": "Backend",
+      "items": [
+        { "name": "Express.js", "level": "production" },
+        { "name": "MERN Stack", "level": "production" },
+        { "name": "REST APIs", "level": "production" }
+      ]
+    },
+    {
+      "category": "Cloud & DevOps",
+      "items": [
+        { "name": "Docker", "level": "production" },
+        { "name": "Kubernetes", "level": "production" },
+        { "name": "Terraform", "level": "production" },
+        { "name": "Ansible", "level": "production" },
+        { "name": "CI/CD", "level": "production" },
+        { "name": "GitHub Actions", "level": "production" }
+      ]
+    },
+    {
+      "category": "Databases",
+      "items": [
+        { "name": "MongoDB", "level": "production" },
+        { "name": "MySQL", "level": "teaching" }
+      ]
+    },
+    {
+      "category": "Other",
+      "items": [
+        { "name": "Linux", "level": "production" },
+        { "name": "Automation", "level": "production" },
+        { "name": "Web Performance", "level": "production" },
+        { "name": "Agile", "level": "teaching" }
+      ]
+    }
+  ]
+}
