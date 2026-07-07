@@ -8,6 +8,42 @@ const levelLabels: Record<string, string> = {
   teaching: 'Taught & used',
   experimental: 'Experimenting',
 };
+
+const tagGroupMap: Record<string, string> = {
+  TypeScript: 'frontend',
+  JavaScript: 'frontend',
+  'Node.js': 'backend',
+  Bash: 'devops',
+  'React.js': 'frontend',
+  Astro: 'frontend',
+  EJS: 'frontend',
+  'HTML/CSS': 'frontend',
+  'Express.js': 'backend',
+  'MERN Stack': 'backend',
+  'REST APIs': 'backend',
+  Docker: 'devops',
+  Kubernetes: 'devops',
+  Terraform: 'devops',
+  Ansible: 'devops',
+  'CI/CD': 'devops',
+  'GitHub Actions': 'devops',
+  MongoDB: 'backend',
+  MySQL: 'backend',
+  Linux: 'other',
+  Automation: 'other',
+  'Web Performance': 'other',
+  Agile: 'other',
+};
+
+const groupLabels: Record<string, string> = {
+  all: 'All',
+  devops: 'DevOps',
+  frontend: 'Frontend',
+  backend: 'Backend',
+  other: 'Other',
+};
+
+const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
 ---
 
 <section id="skills" class="section">
@@ -17,11 +53,18 @@ const levelLabels: Record<string, string> = {
       <h2>Skills & Technologies</h2>
     </div>
 
-    <div class="skills-filter reveal" role="group" aria-label="Filter skills by experience level">
-      <button type="button" class="filter-button is-active" data-filter="all">All</button>
-      <button type="button" class="filter-button" data-filter="production">In production</button>
-      <button type="button" class="filter-button" data-filter="teaching">Taught & used</button>
-      <button type="button" class="filter-button" data-filter="experimental">Experimenting</button>
+    <div class="skills-filter reveal" role="group" aria-label="Filter skills by area">
+      {
+        groups.map((group) => (
+          <button
+            type="button"
+            class={`filter-button${group === 'all' ? ' is-active' : ''}`}
+            data-filter={group}
+          >
+            {groupLabels[group]}
+          </button>
+        ))
+      }
     </div>
 
     <div class="skills-list">
@@ -31,7 +74,7 @@ const levelLabels: Record<string, string> = {
             <h3>{category.category}</h3>
             <ul class="skill-tags">
               {category.items.map((item) => (
-                <li class="skill-tag" data-level={item.level}>
+                <li class="skill-tag" data-level={item.level} data-group={tagGroupMap[item.name]}>
                   <span class="skill-name">{item.name}</span>
                   <span class="skill-level">{levelLabels[item.level]}</span>
                 </li>
@@ -55,8 +98,8 @@ const levelLabels: Record<string, string> = {
         button.classList.add('is-active');
 
         tags.forEach((tag) => {
-          const level = tag.dataset.level ?? '';
-          const matches = filter === 'all' || level === filter;
+          const group = tag.dataset.group ?? '';
+          const matches = filter === 'all' || group === filter;
           tag.classList.toggle('is-hidden', !matches);
         });
       });

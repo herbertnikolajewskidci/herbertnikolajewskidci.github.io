@@ -464,6 +464,13 @@ h3 {
   background-color: var(--color-surface-elevated);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-lg);
+  transition:
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+}
+
+.skill-category.is-hidden {
+  display: none;
 }
 
 .skill-category h3 {
@@ -517,6 +524,10 @@ h3 {
 
 .skill-tag[data-level="experimental"] .skill-level {
   background-color: #fb923c;
+}
+
+.skill-tag:hover {
+  border-color: var(--color-accent);
 }
 
 /* Contact */

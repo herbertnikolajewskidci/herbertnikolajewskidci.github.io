@@ -41,7 +41,7 @@
       "category": "Databases",
       "items": [
         { "name": "MongoDB", "level": "production" },
-        { "name": "MySQL", "level": "teaching" }
+        { "name": "MySQL", "level": "production" }
       ]
     },
     {
@@ -50,7 +50,7 @@
         { "name": "Linux", "level": "production" },
         { "name": "Automation", "level": "production" },
         { "name": "Web Performance", "level": "production" },
-        { "name": "Agile", "level": "teaching" }
+        { "name": "Agile", "level": "production" }
       ]
     }
   ]
