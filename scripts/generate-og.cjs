@@ -8,8 +8,8 @@ const svg = `
   <rect x="80" y="80" width="1040" height="470" rx="24" fill="#111111" stroke="rgba(255,255,255,0.08)" stroke-width="2"/>
   <text x="120" y="240" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="72" font-weight="700" fill="#e8e8e8">Herbert Nikolajewski</text>
   <text x="120" y="330" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="40" font-weight="500" fill="#c9a227">Software Engineer &amp; DevOps</text>
-  <text x="120" y="410" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" fill="#7a7a7a">TypeScript · Kubernetes · Terraform · Ansible</text>
-  <text x="120" y="490" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" fill="#6b6b6b">herbertnikolajewskidci.github.io</text>
+  <text x="120" y="410" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="28" fill="#949494">TypeScript · Kubernetes · Terraform · Ansible</text>
+  <text x="120" y="490" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" fill="#7a7a7a">herbertnikolajewskidci.github.io</text>
 </svg>
 `;
 

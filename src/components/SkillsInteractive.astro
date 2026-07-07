@@ -1,7 +1,10 @@
 ---
-import skillsData from '../content/skills.json';
+import { getCollection } from 'astro:content';
 
-const { categories } = skillsData;
+const skillsEntries = await getCollection('skills');
+const skillsEntry = skillsEntries[0];
+// The file loader returns the JSON root array directly as `data`.
+const categories = (skillsEntry?.data as any) ?? [];
 
 const levelLabels: Record<string, string> = {
   production: 'In production',
@@ -45,6 +48,9 @@ const groupLabels: Record<string, string> = {
 };
 
 const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
+const initialFilter = 'all';
+
+const totalSkills = categories.reduce((sum: number, category: any) => sum + category.items.length, 0);
 ---
 
 <section id="skills" class="section">
@@ -59,8 +65,9 @@ const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
         groups.map((group) => (
           <button
             type="button"
-            class={`filter-button${group === 'all' ? ' is-active' : ''}`}
+            class={`filter-button${group === initialFilter ? ' is-active' : ''}`}
             data-filter={group}
+            aria-pressed={group === initialFilter ? 'true' : 'false'}
           >
             {groupLabels[group]}
           </button>
@@ -68,13 +75,17 @@ const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
       }
     </div>
 
+    <p class="skills-status" aria-live="polite" aria-atomic="true">
+      Showing <strong>{totalSkills}</strong> skills
+    </p>
+
     <div class="skills-list">
       {
-        categories.map((category, categoryIndex) => (
+        categories.map((category: any, categoryIndex: number) => (
           <div class="skill-category reveal" style={`--item-index: ${categoryIndex}`}>
             <h3>{category.category}</h3>
             <ul class="skill-tags">
-              {category.items.map((item) => (
+              {category.items.map((item: any) => (
                 <li class="skill-tag" data-level={item.level} data-group={tagGroupMap[item.name]}>
                   <span class="skill-name">{item.name}</span>
                   <span class="skill-level">{levelLabels[item.level]}</span>
@@ -90,19 +101,36 @@ const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
   <script>
     const buttons = document.querySelectorAll<HTMLButtonElement>('.filter-button');
     const tags = document.querySelectorAll<HTMLLIElement>('.skill-tag');
+    const status = document.querySelector<HTMLParagraphElement>('.skills-status');
+
+    function updateStatus(visibleCount: number, totalCount: number, filterLabel: string) {
+      if (!status) return;
+      const label = filterLabel === 'All' ? 'all skills' : `${filterLabel.toLowerCase()} skills`;
+      status.textContent = `Showing ${visibleCount} of ${totalCount} ${label}`;
+    }
 
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const filter = button.dataset.filter ?? 'all';
+        const filterLabel = button.textContent?.trim() ?? 'All';
 
-        buttons.forEach((btn) => btn.classList.remove('is-active'));
-        button.classList.add('is-active');
+        buttons.forEach((btn) => {
+          const isSelected = btn === button;
+          btn.classList.toggle('is-active', isSelected);
+          btn.setAttribute('aria-pressed', isSelected ? 'true' : 'false');
+        });
+
+        let visibleCount = 0;
 
         tags.forEach((tag) => {
           const group = tag.dataset.group ?? '';
           const matches = filter === 'all' || group === filter;
           tag.classList.toggle('is-hidden', !matches);
+          tag.setAttribute('aria-hidden', matches ? 'false' : 'true');
+          if (matches) visibleCount++;
         });
+
+        updateStatus(visibleCount, tags.length, filterLabel);
       });
     });
   </script>

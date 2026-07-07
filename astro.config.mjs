@@ -6,5 +6,14 @@ import sitemap from '@astrojs/sitemap';
 export default defineConfig({
   site: 'https://herbertnikolajewskidci.github.io',
   output: 'static',
-  integrations: [sitemap()],
+  integrations: [
+    sitemap({
+      changefreq: 'monthly',
+      priority: 0.7,
+      lastmod: new Date(),
+    }),
+  ],
+  build: {
+    inlineStylesheets: 'auto',
+  },
 });

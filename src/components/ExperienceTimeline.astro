@@ -1,7 +1,16 @@
 ---
 import { getCollection } from 'astro:content';
 
-const entries = await getCollection('experience');
+let entries: Awaited<ReturnType<typeof getCollection<'experience'>>> = [];
+let loadError = false;
+
+try {
+  entries = await getCollection('experience');
+} catch (error) {
+  console.error('Failed to load experience entries:', error);
+  loadError = true;
+}
+
 const sortedEntries = entries.sort((a, b) => a.data.order - b.data.order);
 ---
 
@@ -12,31 +21,48 @@ const sortedEntries = entries.sort((a, b) => a.data.order - b.data.order);
       <h2>Experience</h2>
     </div>
 
-    <div class="timeline">
-      {
-        sortedEntries.map((entry, index) => (
-          <article class="timeline-item reveal" style={`--item-index: ${index}`}>
-            <div class="timeline-marker" aria-hidden="true" />
-            <div class="timeline-content">
-              <header class="timeline-header">
-                <div>
-                  <h3>{entry.data.role}</h3>
-                  <p class="timeline-company">{entry.data.company}</p>
+    {
+      loadError ? (
+        <p class="timeline-error">
+          Work history is temporarily unavailable. Please check back later or contact me directly.
+        </p>
+      ) : (
+        <div class="timeline">
+          {sortedEntries.map((entry, index) => {
+            const dateTimeAttr = entry.data.dateEnd
+              ? `${entry.data.dateStart}/${entry.data.dateEnd}`
+              : `${entry.data.dateStart}/present`;
+
+            return (
+              <article class="timeline-item reveal" style={`--item-index: ${index}`}>
+                <div class="timeline-marker" aria-hidden="true" />
+                <div class="timeline-content">
+                  <header class="timeline-header">
+                    <div>
+                      <h3>{entry.data.role}</h3>
+                      <p class="timeline-company">
+                        {entry.data.company}
+                        <span class="timeline-type">· {entry.data.employmentType}</span>
+                      </p>
+                    </div>
+                    <time class="timeline-date" datetime={dateTimeAttr}>
+                      {entry.data.date}
+                    </time>
+                  </header>
+                  <p class="timeline-location">{entry.data.location}</p>
+                  <div class="timeline-body">
+                    <ul>
+                      {entry.data.highlights.map((highlight) => (
+                        <li>{highlight}</li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
-                <time class="timeline-date">{entry.data.date}</time>
-              </header>
-              <p class="timeline-location">{entry.data.location}</p>
-              <div class="timeline-body">
-                <ul>
-                  {entry.data.highlights.map((highlight) => (
-                    <li>{highlight}</li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-          </article>
-        ))
-      }
-    </div>
+              </article>
+            );
+          })}
+        </div>
+      )
+    }
   </div>
 </section>

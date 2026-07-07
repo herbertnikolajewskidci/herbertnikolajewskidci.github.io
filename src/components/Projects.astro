@@ -1,0 +1,79 @@
+---
+interface Project {
+  title: string;
+  role: string;
+  description: string;
+  stack: string[];
+  outcome: string;
+  link?: { label: string; href: string };
+}
+
+const projects: Project[] = [
+  {
+    title: 'Kubernetes migration to Hetzner',
+    role: 'DevOps Engineer · Seibel GmbH',
+    description:
+      'Migrated a legacy DigitalOcean Kubernetes cluster to Hetzner without service downtime. Replaced managed load balancers with self-managed infrastructure and automated server provisioning.',
+    stack: ['Kubernetes', 'Terraform', 'Ansible', 'Docker', 'Hetzner'],
+    outcome: 'Reduced infrastructure spend from €1,500+/month to under €100/month.',
+    link: { label: 'Visit Seibel', href: 'https://seibel.dev' },
+  },
+  {
+    title: 'WordPress-to-Node.js platform rewrite',
+    role: 'Full-Stack Developer · 09 Media',
+    description:
+      'Rebuilt a WordPress-based publishing platform as a custom Node.js/Express application with server-side EJS rendering. Focused on performance, SEO, and maintainability.',
+    stack: ['Node.js', 'Express', 'EJS', 'MongoDB', 'Nginx'],
+    outcome: 'Improved performance and SEO metrics by ~25%.',
+  },
+  {
+    title: 'Self-hosted identity platform',
+    role: 'DevOps Engineer · heycare',
+    description:
+      'Prototyped a self-hosted Keycloak identity platform to replace render.com-hosted auth. Integrated OAuth2/OIDC flows end-to-end across a TypeScript service stack.',
+    stack: ['Keycloak', 'Terraform', 'Ansible', 'TypeScript', 'Node.js'],
+    outcome: 'Prepared the team for a cost-effective, vendor-independent auth architecture.',
+  },
+];
+---
+
+<section id="projects" class="section">
+  <div class="container">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">Selected work</p>
+      <h2>Projects</h2>
+    </div>
+
+    <div class="projects-list">
+      {
+        projects.map((project, index) => (
+          <article class="project-card reveal" style={`--item-index: ${index}`}>
+            <header class="project-header">
+              <h3>{project.title}</h3>
+              <p class="project-role">{project.role}</p>
+            </header>
+            <p class="project-description">{project.description}</p>
+            <ul class="project-stack" aria-label="Technologies used">
+              {project.stack.map((tech) => (
+                <li>{tech}</li>
+              ))}
+            </ul>
+            <p class="project-outcome">
+              <strong>Result:</strong> {project.outcome}
+            </p>
+            {project.link && (
+              <a
+                href={project.link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="project-link"
+              >
+                {project.link.label} →
+              </a>
+            )}
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

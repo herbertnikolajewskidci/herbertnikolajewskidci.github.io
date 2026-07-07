@@ -3,6 +3,9 @@ role: "Full-Stack Lecturer"
 company: "DCI Digital Career Institute"
 location: "Germany (Remote)"
 date: "Oct 2022 – Jul 2024"
+dateStart: "2022-10"
+dateEnd: "2024-07"
+employmentType: "Full-time"
 order: 4
 highlights:
   - Taught full-stack MERN development to 100+ career-changers.

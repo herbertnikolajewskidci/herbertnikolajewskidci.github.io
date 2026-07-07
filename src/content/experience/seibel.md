@@ -3,6 +3,8 @@ role: "DevOps Engineer"
 company: "Seibel GmbH"
 location: "Remote"
 date: "Oct 2022 – Present"
+dateStart: "2022-10"
+employmentType: "Freelance"
 order: 3
 highlights:
   - Migrated a legacy Kubernetes cluster from DigitalOcean to Hetzner.

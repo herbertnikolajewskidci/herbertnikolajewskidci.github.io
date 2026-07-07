@@ -2,24 +2,24 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ExperienceTimeline from '../components/ExperienceTimeline.astro';
+// import Projects from '../components/Projects.astro';
 import SkillsInteractive from '../components/SkillsInteractive.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
-
-const title = 'Herbert Nikolajewski · Software Engineer & DevOps';
-const description =
-  'Full-stack developer with a DevOps focus. I build reliable applications and the infrastructure that runs them. TypeScript, Kubernetes, Terraform, Ansible.';
+import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
 ---
 
-<BaseLayout title={title} description={description}>
+<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
   <main id="main">
     <Hero
       title="Herbert Nikolajewski"
       tagline="I build software and the infrastructure it runs on."
-      summary="Full-stack developer with a DevOps focus. I like making systems that are fast, maintainable, and cost-effective — from TypeScript frontends to self-hosted Kubernetes clusters. Based in Regensburg, Germany."
+      summary="Full-stack developer with a DevOps focus. I like making systems that are fast, maintainable, and cost-effective — from TypeScript frontends to self-hosted Kubernetes clusters. Recent wins include cutting cloud spend by 90%+ and migrating production workloads to Hetzner. Based in Regensburg, Germany."
     />
 
     <ExperienceTimeline />
+
+    <!-- <Projects /> -->
 
     <SkillsInteractive />
 

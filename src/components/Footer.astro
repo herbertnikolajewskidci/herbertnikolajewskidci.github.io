@@ -1,9 +1,16 @@
 ---
+import { LEGAL } from '../config';
+
 const year = new Date().getFullYear();
 ---
 
 <footer class="footer">
-  <div class="container">
+  <div class="container footer-inner">
     <p>© {year} Herbert Nikolajewski</p>
+    <nav aria-label="Legal">
+      <a href={LEGAL.imprintUrl}>Impressum</a>
+      <span aria-hidden="true">·</span>
+      <a href={LEGAL.privacyUrl}>Datenschutz</a>
+    </nav>
   </div>
 </footer>

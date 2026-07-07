@@ -3,6 +3,9 @@ role: "Full-Stack Developer"
 company: "Allgeier Public"
 location: "Landesamt für Finanzen, Regensburg (Hybrid)"
 date: "Aug 2024 – Jan 2026"
+dateStart: "2024-08"
+dateEnd: "2026-01"
+employmentType: "Full-time"
 order: 2
 highlights:
   - Developed and optimized internal applications used by Bavarian authorities.

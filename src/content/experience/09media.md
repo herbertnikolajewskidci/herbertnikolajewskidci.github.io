@@ -3,6 +3,9 @@ role: "Full-Stack Developer"
 company: "09 Media GmbH"
 location: "Regensburg (Hybrid)"
 date: "Oct 2020 – Sept 2022"
+dateStart: "2020-10"
+dateEnd: "2022-09"
+employmentType: "Full-time"
 order: 5
 highlights:
   - Migrated a WordPress platform to Node.js/Express/EJS, improving performance and SEO metrics by ~25%.

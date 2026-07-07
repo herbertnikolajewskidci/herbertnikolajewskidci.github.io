@@ -1,0 +1,49 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE_TITLE } from '../config';
+
+const title = `Page not found · ${SITE_TITLE}`;
+const description = 'The page you are looking for does not exist.';
+---
+
+<BaseLayout title={title} description={description}>
+  <main id="main" class="error-page">
+    <div class="container">
+      <p class="error-code">404</p>
+      <h1>Page not found</h1>
+      <p class="error-message">
+        The page you are looking for does not exist or has been moved.
+      </p>
+      <a href="/" class="button button-primary">Back to home</a>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  .error-page {
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    padding-block: 6rem;
+    text-align: center;
+  }
+
+  .error-code {
+    font-size: clamp(4rem, 12vw, 8rem);
+    font-weight: 700;
+    color: var(--color-accent);
+    line-height: 1;
+    margin-bottom: 1rem;
+  }
+
+  .error-page h1 {
+    margin-bottom: 1rem;
+  }
+
+  .error-message {
+    color: var(--color-text-muted);
+    margin-bottom: 2rem;
+    max-width: 45ch;
+    margin-inline: auto;
+  }
+</style>

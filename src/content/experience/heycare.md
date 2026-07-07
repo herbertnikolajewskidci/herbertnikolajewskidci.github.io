@@ -3,6 +3,9 @@ role: "DevOps Engineer"
 company: "heycare"
 location: "Remote"
 date: "Feb 2026 – Jun 2026"
+dateStart: "2026-02"
+dateEnd: "2026-06"
+employmentType: "Contract"
 order: 1
 highlights:
   - Built Infrastructure-as-Code on Hetzner using Terraform and Ansible, replacing manual server setups.
