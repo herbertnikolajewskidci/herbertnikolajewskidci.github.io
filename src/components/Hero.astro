@@ -1,4 +1,6 @@
 ---
+import ThemeToggle from './ThemeToggle.astro';
+
 interface Props {
   title: string;
   tagline: string;
@@ -9,6 +11,9 @@ const { title, tagline, summary } = Astro.props;
 ---
 
 <header class="hero">
+  <div class="hero-toggle">
+    <ThemeToggle />
+  </div>
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
