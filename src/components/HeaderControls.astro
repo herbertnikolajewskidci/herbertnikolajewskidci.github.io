@@ -1,0 +1,293 @@
+---
+import LangToggle from './LangToggle.astro';
+import ThemeToggle from './ThemeToggle.astro';
+import { translations as tr } from '../i18n/translations';
+
+const en = tr.en;
+const de = tr.de;
+---
+
+<!-- Inline controls (desktop only, >=768px) -->
+<div class="header-controls header-controls--inline" aria-hidden="false">
+  <LangToggle />
+  <ThemeToggle />
+</div>
+
+<!-- Hamburger button (mobile only, <768px) -->
+<button
+  type="button"
+  class="header-hamburger"
+  aria-label="Open menu"
+  aria-expanded="false"
+  aria-controls="header-sidebar"
+  data-hamburger
+>
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="3" y1="6" x2="21" y2="6"></line>
+    <line x1="3" y1="12" x2="21" y2="12"></line>
+    <line x1="3" y1="18" x2="21" y2="18"></line>
+  </svg>
+  <svg class="header-hamburger-close" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <line x1="6" y1="6" x2="18" y2="18"></line>
+    <line x1="18" y1="6" x2="6" y2="18"></line>
+  </svg>
+</button>
+
+<!-- Sidebar backdrop -->
+<div class="header-backdrop" data-sidebar-backdrop hidden></div>
+
+<!-- Sidebar (mobile only, slides from right) -->
+<aside
+  id="header-sidebar"
+  class="header-sidebar"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Menu"
+  data-sidebar
+  hidden
+>
+  <button
+    type="button"
+    class="header-sidebar-close"
+    aria-label="Close menu"
+    data-sidebar-close
+  >
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <line x1="6" y1="6" x2="18" y2="18"></line>
+      <line x1="18" y1="6" x2="6" y2="18"></line>
+    </svg>
+  </button>
+  <div class="header-sidebar-inner">
+    <div class="header-sidebar-section">
+      <span class="header-sidebar-label">
+        <span data-lang="en">{en.langLabel}</span>
+        <span data-lang="de">{de.langLabel}</span>
+      </span>
+      <LangToggle />
+    </div>
+    <div class="header-sidebar-section">
+      <span class="header-sidebar-label">
+        <span data-lang="en">{en.themeLabel}</span>
+        <span data-lang="de">{de.themeLabel}</span>
+      </span>
+      <ThemeToggle />
+    </div>
+  </div>
+</aside>
+
+<script>
+  (function () {
+    const hamburger = document.querySelector<HTMLButtonElement>('[data-hamburger]');
+    const sidebar = document.querySelector<HTMLElement>('[data-sidebar]');
+    const backdrop = document.querySelector<HTMLElement>('[data-sidebar-backdrop]');
+    if (!hamburger || !sidebar || !backdrop) return;
+
+    function open() {
+      sidebar!.hidden = false;
+      backdrop!.hidden = false;
+      hamburger!.setAttribute('aria-expanded', 'true');
+      hamburger!.classList.add('is-open');
+      requestAnimationFrame(() => sidebar!.classList.add('is-open'));
+      document.body.style.overflow = 'hidden';
+    }
+
+    function close() {
+      hamburger!.setAttribute('aria-expanded', 'false');
+      hamburger!.classList.remove('is-open');
+      sidebar!.classList.remove('is-open');
+      document.body.style.overflow = '';
+      const handler = () => {
+        sidebar!.hidden = true;
+        sidebar!.removeEventListener('transitionend', handler);
+      };
+      sidebar!.addEventListener('transitionend', handler);
+      backdrop!.hidden = true;
+    }
+
+    function toggle() {
+      if (hamburger!.classList.contains('is-open')) close();
+      else open();
+    }
+
+    hamburger.addEventListener('click', toggle);
+    backdrop.addEventListener('click', close);
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && sidebar!.hidden === false) close();
+    });
+
+    const closeBtn = sidebar!.querySelector<HTMLButtonElement>('[data-sidebar-close]');
+    closeBtn?.addEventListener('click', close);
+
+    // Update close button aria-label on language change
+    function updateCloseAria() {
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
+      if (closeBtn) closeBtn.setAttribute('aria-label', lang === 'en' ? 'Close menu' : 'Menü schließen');
+    }
+    updateCloseAria();
+    document.addEventListener('langchange', updateCloseAria);
+  })();
+</script>
+
+<style>
+  /* Desktop: inline controls, hide hamburger */
+  @media (min-width: 768px) {
+    .header-hamburger {
+      display: none !important;
+    }
+    .header-sidebar,
+    .header-backdrop {
+      display: none !important;
+    }
+  }
+
+  /* Mobile: hamburger, hide inline controls */
+  @media (max-width: 767px) {
+    .header-controls--inline {
+      display: none !important;
+    }
+  }
+
+  .header-hamburger {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 110;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition:
+      border-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .header-hamburger:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .header-hamburger:focus-visible {
+    outline-offset: 2px;
+  }
+
+  .header-hamburger-close {
+    display: none;
+  }
+
+  .header-hamburger.is-open .header-hamburger-close {
+    display: block;
+  }
+
+  .header-hamburger.is-open svg:not(.header-hamburger-close) {
+    display: none;
+  }
+
+  /* Backdrop */
+  .header-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 115;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+  }
+
+  .header-backdrop:not([hidden]) {
+    opacity: 1;
+  }
+
+  /* Sidebar */
+  .header-sidebar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    z-index: 120;
+    width: min(280px, 85vw);
+    height: 100vh;
+    background-color: var(--color-surface);
+    border-left: 1px solid var(--color-border);
+    transform: translateX(100%);
+    transition: transform var(--transition-base, 250ms ease);
+    padding: 1.5rem 1.5rem 2rem;
+    overflow-y: auto;
+  }
+
+  .header-sidebar-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2.25rem;
+    height: 2.25rem;
+    background: transparent;
+    border: 0;
+    border-radius: var(--radius-sm, 4px);
+    color: var(--color-text-muted);
+    cursor: pointer;
+    transition:
+      color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+
+  .header-sidebar-close:hover {
+    color: var(--color-accent);
+    background-color: var(--color-accent-dim);
+  }
+
+  .header-sidebar-close:focus-visible {
+    outline-offset: 2px;
+  }
+
+  .header-sidebar.is-open {
+    transform: translateX(0);
+  }
+
+  .header-sidebar-inner {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .header-sidebar-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .header-sidebar-section:last-child {
+    border-bottom: 0;
+  }
+
+  .header-sidebar-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* Sidebar toggles override their absolute positioning */
+  .header-sidebar .lang-toggle,
+  .header-sidebar .theme-toggle {
+    box-shadow: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .header-sidebar,
+    .header-backdrop {
+      transition: none;
+    }
+  }
+</style>

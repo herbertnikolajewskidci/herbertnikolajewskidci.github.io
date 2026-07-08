@@ -5,34 +5,25 @@ const en = translations.en;
 const de = translations.de;
 ---
 
-<div class="lang-toggle" data-lang-toggle>
-  <button
-    type="button"
-    class="lang-toggle-btn"
-    data-lang-option="de"
-    aria-pressed="true"
-    aria-label={de.langSwitchToDe}
-  >
-    <span aria-hidden="true">DE</span>
-  </button>
+<button
+  type="button"
+  class="lang-toggle"
+  data-lang-toggle
+  aria-pressed="false"
+  aria-label={en.langSwitchToEn}
+  title="DE / EN"
+>
+  <span class="lang-toggle-current" aria-hidden="true">DE</span>
   <span class="lang-toggle-sep" aria-hidden="true">/</span>
-  <button
-    type="button"
-    class="lang-toggle-btn"
-    data-lang-option="en"
-    aria-pressed="false"
-    aria-label={en.langSwitchToEn}
-  >
-    <span aria-hidden="true">EN</span>
-  </button>
+  <span class="lang-toggle-other" aria-hidden="true">EN</span>
   <span class="lang-toggle-label">{en.langLabel}</span>
-</div>
+</button>
 
 <script>
   (function () {
     const STORAGE_KEY = 'lang';
     const root = document.documentElement;
-    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-option]');
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-toggle]');
 
     function currentLang(): 'de' | 'en' {
       return root.lang === 'en' ? 'en' : 'de';
@@ -41,10 +32,20 @@ const de = translations.de;
     function applyLang(lang: 'de' | 'en') {
       root.lang = lang;
       localStorage.setItem(STORAGE_KEY, lang);
+
+      const current = lang.toUpperCase();
+      const other = lang === 'en' ? 'DE' : 'EN';
+      const ariaLabel = lang === 'en' ? 'Switch to German' : 'Switch to English';
+
       buttons.forEach((btn) => {
-        const isActive = btn.dataset.langOption === lang;
-        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        const cur = btn.querySelector('.lang-toggle-current');
+        const oth = btn.querySelector('.lang-toggle-other');
+        if (cur) cur.textContent = current;
+        if (oth) oth.textContent = other;
+        btn.setAttribute('aria-label', ariaLabel);
+        btn.setAttribute('aria-pressed', lang === 'en' ? 'true' : 'false');
       });
+
       document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
     }
 
@@ -53,8 +54,8 @@ const de = translations.de;
 
     buttons.forEach((btn) => {
       btn.addEventListener('click', () => {
-        const next = (btn.dataset.langOption === 'en' ? 'en' : 'de') as 'de' | 'en';
-        if (next !== currentLang()) applyLang(next);
+        const next = currentLang() === 'en' ? 'de' : 'en';
+        applyLang(next);
       });
     });
   })();
@@ -65,7 +66,7 @@ const de = translations.de;
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    padding: 0.5rem 0.75rem;
+    padding: 0.5rem 0.85rem;
     background-color: var(--color-surface-elevated);
     border: 1px solid var(--color-border);
     border-radius: var(--radius-md);
@@ -86,25 +87,16 @@ const de = translations.de;
     color: var(--color-accent);
   }
 
-  .lang-toggle-btn {
-    appearance: none;
-    background: transparent;
-    border: 0;
-    padding: 0;
-    color: inherit;
-    font: inherit;
-    cursor: pointer;
-    opacity: 0.55;
-    transition: opacity var(--transition-fast), color var(--transition-fast);
+  .lang-toggle:focus-visible {
+    outline-offset: 2px;
   }
 
-  .lang-toggle-btn:hover {
-    opacity: 1;
-  }
-
-  .lang-toggle-btn[aria-pressed='true'] {
-    opacity: 1;
+  .lang-toggle-current {
     color: var(--color-accent);
+  }
+
+  .lang-toggle-other {
+    opacity: 0.5;
   }
 
   .lang-toggle-sep {

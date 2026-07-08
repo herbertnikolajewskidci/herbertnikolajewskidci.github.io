@@ -239,18 +239,19 @@ h3 {
   padding-block: 5rem 4rem;
 }
 
-.hero-toggle {
-  position: absolute;
+/* Header controls (desktop inline) */
+.header-controls--inline {
+  position: fixed;
   top: 1.5rem;
   right: 1.5rem;
-  z-index: 10;
+  z-index: 100;
   display: flex;
   align-items: center;
   gap: 0.75rem;
 }
 
 @media (min-width: 640px) {
-  .hero-toggle {
+  .header-controls--inline {
     right: 2rem;
   }
 }

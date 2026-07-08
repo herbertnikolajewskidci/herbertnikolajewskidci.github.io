@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import { AUTHOR, SITE_URL, SOCIAL_LINKS } from '../config';
 import { translations } from '../i18n/translations';
+import HeaderControls from '../components/HeaderControls.astro';
 
 interface Props {
   title: string;
@@ -101,6 +102,7 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
       <span data-lang="en">{tr.en.skipLink}</span>
       <span data-lang="de">{tr.de.skipLink}</span>
     </a>
+    <HeaderControls />
     <slot />
 
     <script>

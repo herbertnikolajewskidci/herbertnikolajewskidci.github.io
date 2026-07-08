@@ -1,6 +1,4 @@
 ---
-import ThemeToggle from './ThemeToggle.astro';
-import LangToggle from './LangToggle.astro';
 import { translations as tr } from '../i18n/translations';
 
 const en = tr.en;
@@ -8,10 +6,6 @@ const de = tr.de;
 ---
 
 <header class="hero">
-  <div class="hero-toggle">
-    <LangToggle />
-    <ThemeToggle />
-  </div>
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
