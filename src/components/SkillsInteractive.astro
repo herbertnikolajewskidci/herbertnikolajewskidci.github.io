@@ -90,13 +90,8 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
       }
     </div>
 
-    <p class="skills-status" aria-live="polite" aria-atomic="true">
-      <span data-lang="en">
-        Showing <strong>{totalSkills}</strong> skills
-      </span>
-      <span data-lang="de">
-        Zeige <strong>{totalSkills}</strong> Fähigkeiten
-      </span>
+    <p class="skills-status" aria-live="polite" aria-atomic="true" data-total={totalSkills}>
+      <!-- status text is rendered by JS for live language + filter state -->
     </p>
 
     <div class="skills-list">
@@ -130,11 +125,11 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
     const status = document.querySelector<HTMLParagraphElement>('.skills-status');
 
     const FILTER_LABELS: Record<string, { en: string; de: string }> = {
-      all: { en: 'all', de: 'alle' },
-      devops: { en: 'devops', de: 'devops' },
-      frontend: { en: 'frontend', de: 'frontend' },
-      backend: { en: 'backend', de: 'backend' },
-      other: { en: 'other', de: 'sonstige' },
+      all: { en: 'skills', de: 'Fähigkeiten' },
+      devops: { en: 'devops skills', de: 'DevOps-Fähigkeiten' },
+      frontend: { en: 'frontend skills', de: 'Frontend-Fähigkeiten' },
+      backend: { en: 'backend skills', de: 'Backend-Fähigkeiten' },
+      other: { en: 'other skills', de: 'sonstige Fähigkeiten' },
     };
 
     function renderStatus(visibleCount: number, totalCount: number, filter: string) {
@@ -143,10 +138,8 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
       const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
       status.innerHTML =
         lang === 'en'
-          ? `Showing <strong>${visibleCount}</strong> of ${totalCount} ${labels.en} skills`
-          : `Zeige <strong>${visibleCount}</strong> von ${totalCount} ${labels.de} ${
-              filter === 'all' ? 'Fähigkeiten' : 'Fähigkeiten'
-            }`;
+          ? `<strong>${visibleCount}</strong> ${labels.en} · filter to narrow ↓`
+          : `<strong>${visibleCount}</strong> ${labels.de} · filtern ↓`;
     }
 
     function updateActiveFilterVisuals() {
@@ -186,6 +179,10 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
         renderStatus(visibleCount, tags.length, filter);
       });
     });
+
+    // Initial render (status starts empty, JS sets the right string
+    // for the user's active language and the default "all" filter).
+    renderStatus(tags.length, tags.length, 'all');
 
     // Re-render status when language changes (because text is set by JS, not CSS toggled)
     document.addEventListener('langchange', () => {
