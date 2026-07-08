@@ -1,38 +1,70 @@
 ---
-interface Project {
-  title: string;
-  role: string;
-  description: string;
+import { translations as tr } from '../i18n/translations';
+
+const en = tr.en;
+const de = tr.de;
+
+interface ProjectEntry {
+  index: string;
+  company: string;
+  roleEn: string;
+  roleDe: string;
+  dateEn: string;
+  dateDe: string;
+  titleEn: string;
+  titleDe: string;
+  descriptionEn: string;
+  descriptionDe: string;
   stack: string[];
-  outcome: string;
-  link?: { label: string; href: string };
+  link?: { labelEn: string; labelDe: string; href: string };
 }
 
-const projects: Project[] = [
+const projects: ProjectEntry[] = [
   {
-    title: 'Kubernetes migration to Hetzner',
-    role: 'DevOps Engineer · Seibel GmbH',
-    description:
-      'Migrated a legacy DigitalOcean Kubernetes cluster to Hetzner without service downtime. Replaced managed load balancers with self-managed infrastructure and automated server provisioning.',
+    index: '01',
+    company: 'Seibel GmbH',
+    roleEn: 'DevOps Engineer',
+    roleDe: 'DevOps Engineer',
+    dateEn: 'Oct 2022 – Present',
+    dateDe: 'Okt. 2022 – Heute',
+    titleEn: 'Kubernetes migration to Hetzner',
+    titleDe: 'Kubernetes-Migration zu Hetzner',
+    descriptionEn:
+      'Migrated a legacy DigitalOcean Kubernetes cluster to Hetzner without service downtime. Replaced managed load balancers with self-managed infrastructure and automated server provisioning, reducing infrastructure spend from over €1,500/month to under €100/month while keeping 200+ client sites reliable.',
+    descriptionDe:
+      'Migration eines Legacy-Kubernetes-Clusters von DigitalOcean zu Hetzner ohne Service-Downtime. Managed Load Balancer durch selbstverwaltete Infrastruktur ersetzt und Server-Provisioning automatisiert — Infrastrukturkosten von über 1.500 €/Monat auf unter 100 €/Monat gesenkt, 200+ Kunden-Sites zuverlässig gehalten.',
     stack: ['Kubernetes', 'Terraform', 'Ansible', 'Docker', 'Hetzner'],
-    outcome: 'Reduced infrastructure spend from €1,500+/month to under €100/month.',
-    link: { label: 'Visit Seibel', href: 'https://seibel.dev' },
+    link: { labelEn: 'Visit Seibel', labelDe: 'Seibel ansehen', href: 'https://seibel.dev' },
   },
   {
-    title: 'WordPress-to-Node.js platform rewrite',
-    role: 'Full-Stack Developer · 09 Media',
-    description:
-      'Rebuilt a WordPress-based publishing platform as a custom Node.js/Express application with server-side EJS rendering. Focused on performance, SEO, and maintainability.',
+    index: '02',
+    company: '09 Media GmbH',
+    roleEn: 'Full-Stack Developer',
+    roleDe: 'Full-Stack-Entwickler',
+    dateEn: 'Oct 2020 – Sept 2022',
+    dateDe: 'Okt. 2020 – Sept. 2022',
+    titleEn: 'WordPress-to-Node.js platform rewrite',
+    titleDe: 'WordPress-zu-Node.js-Plattform-Rewrite',
+    descriptionEn:
+      'Rebuilt a WordPress-based publishing platform as a custom Node.js/Express application with server-side EJS rendering, improving performance and SEO metrics by about 25% and automating data-entry workflows that reduced daily manual work from hours to minutes.',
+    descriptionDe:
+      'WordPress-basierte Publikations-Plattform als eigene Node.js/Express-Anwendung mit serverseitigem EJS-Rendering neu aufgebaut — Performance und SEO-Kennzahlen um etwa 25% verbessert, Dateneingabe-Workflows automatisiert und tägliche manuelle Arbeit von Stunden auf Minuten reduziert.',
     stack: ['Node.js', 'Express', 'EJS', 'MongoDB', 'Nginx'],
-    outcome: 'Improved performance and SEO metrics by ~25%.',
   },
   {
-    title: 'Self-hosted identity platform',
-    role: 'DevOps Engineer · heycare',
-    description:
-      'Prototyped a self-hosted Keycloak identity platform to replace render.com-hosted auth. Integrated OAuth2/OIDC flows end-to-end across a TypeScript service stack.',
+    index: '03',
+    company: 'heycare',
+    roleEn: 'DevOps Engineer',
+    roleDe: 'DevOps Engineer',
+    dateEn: 'Feb 2026 – Jun 2026',
+    dateDe: 'Feb. 2026 – Juni 2026',
+    titleEn: 'Self-hosted identity platform',
+    titleDe: 'Selbstgehostete Identity-Plattform',
+    descriptionEn:
+      'Prototyped a self-hosted Keycloak identity platform to replace render.com-hosted auth. Built Infrastructure-as-Code on Hetzner using Terraform and Ansible, integrated OAuth2/OIDC flows end-to-end across a TypeScript service stack, and prepared the team for a cost-effective, vendor-independent auth architecture.',
+    descriptionDe:
+      'Selbstgehostete Keycloak-Identity-Plattform prototypisiert, um render.com-gehosteten Auth zu ersetzen. Infrastructure-as-Code auf Hetzner mit Terraform und Ansible, OAuth2/OIDC-Flows end-to-end in einen TypeScript-Service-Stack integriert, Team auf eine kosteneffiziente, herstellerunabhängige Auth-Architektur vorbereitet.',
     stack: ['Keycloak', 'Terraform', 'Ansible', 'TypeScript', 'Node.js'],
-    outcome: 'Prepared the team for a cost-effective, vendor-independent auth architecture.',
   },
 ];
 ---
@@ -40,37 +72,61 @@ const projects: Project[] = [
 <section id="projects" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <p class="section-eyebrow">Selected work</p>
-      <h2>Projects</h2>
+      <p class="section-eyebrow">
+        <span data-lang="en">// Selected work</span>
+        <span data-lang="de">// Ausgewählte Arbeiten</span>
+      </p>
+      <h2>
+        <span data-lang="en">Projects</span>
+        <span data-lang="de">Projekte</span>
+      </h2>
     </div>
 
-    <div class="projects-list">
+    <div class="projects-entries">
       {
-        projects.map((project, index) => (
-          <article class="project-card reveal" style={`--item-index: ${index}`}>
-            <header class="project-header">
-              <h3>{project.title}</h3>
-              <p class="project-role">{project.role}</p>
+        projects.map((project) => (
+          <article class="project-entry reveal">
+            <header class="project-entry-meta">
+              <p class="project-entry-index">
+                // {project.index} · {project.company}
+              </p>
+              <p class="project-entry-date">
+                <span data-lang="en">{project.dateEn}</span>
+                <span data-lang="de">{project.dateDe}</span>
+              </p>
+              <p class="project-entry-role">
+                <span data-lang="en">{project.roleEn}</span>
+                <span data-lang="de">{project.roleDe}</span>
+              </p>
             </header>
-            <p class="project-description">{project.description}</p>
-            <ul class="project-stack" aria-label="Technologies used">
-              {project.stack.map((tech) => (
-                <li>{tech}</li>
-              ))}
-            </ul>
-            <p class="project-outcome">
-              <strong>Result:</strong> {project.outcome}
-            </p>
-            {project.link && (
-              <a
-                href={project.link.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                class="project-link"
-              >
-                {project.link.label} →
-              </a>
-            )}
+
+            <div class="project-entry-body">
+              <h3>
+                <span data-lang="en">{project.titleEn}</span>
+                <span data-lang="de">{project.titleDe}</span>
+              </h3>
+              <p class="project-entry-description">
+                <span data-lang="en">{project.descriptionEn}</span>
+                <span data-lang="de">{project.descriptionDe}</span>
+              </p>
+              <ul class="project-entry-stack" aria-label="Technologies used">
+                {project.stack.map((tech) => (
+                  <li>{tech}</li>
+                ))}
+              </ul>
+              {project.link && (
+                <a
+                  href={project.link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="project-entry-link"
+                >
+                  <span data-lang="en">{project.link.labelEn}</span>
+                  <span data-lang="de">{project.link.labelDe}</span>
+                  <span aria-hidden="true"> →</span>
+                </a>
+              )}
+            </div>
           </article>
         ))
       }
