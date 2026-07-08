@@ -209,7 +209,6 @@ h3 {
   font-weight: 600;
   font-size: 0.95rem;
   transition:
-    transform var(--transition-fast),
     background-color var(--transition-fast),
     border-color var(--transition-fast),
     color var(--transition-fast);
@@ -222,7 +221,6 @@ h3 {
 
 .button-primary:hover {
   background-color: var(--color-accent-light);
-  transform: translateY(-2px);
 }
 
 .button-secondary {
@@ -234,7 +232,6 @@ h3 {
 .button-secondary:hover {
   border-color: var(--color-accent);
   color: var(--color-accent);
-  transform: translateY(-2px);
 }
 
 /* Hero */
@@ -562,7 +559,11 @@ h3 {
   border-radius: var(--radius-lg);
   transition:
     opacity var(--transition-fast),
-    transform var(--transition-fast);
+    border-color var(--transition-fast);
+}
+
+.skill-category:hover {
+  border-color: var(--color-border-strong);
 }
 
 .skill-category.is-hidden {
@@ -720,12 +721,12 @@ h3 {
   border-radius: var(--radius-lg);
   transition:
     border-color var(--transition-fast),
-    transform var(--transition-fast);
+    box-shadow var(--transition-fast);
 }
 
 .contact-card:hover {
   border-color: var(--color-accent);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
 
 .contact-card-static {
@@ -734,7 +735,7 @@ h3 {
 
 .contact-card-static:hover {
   border-color: var(--color-border);
-  transform: none;
+  box-shadow: none;
 }
 
 .contact-card:focus-visible {
@@ -807,12 +808,12 @@ h3 {
   border-radius: var(--radius-lg);
   transition:
     border-color var(--transition-fast),
-    transform var(--transition-fast);
+    box-shadow var(--transition-fast);
 }
 
 .project-card:hover {
   border-color: var(--color-border-strong);
-  transform: translateY(-2px);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.18);
 }
 
 .project-header {
