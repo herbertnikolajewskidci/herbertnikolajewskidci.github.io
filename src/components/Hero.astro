@@ -1,29 +1,42 @@
 ---
 import ThemeToggle from './ThemeToggle.astro';
+import LangToggle from './LangToggle.astro';
+import { translations as tr } from '../i18n/translations';
 
-interface Props {
-  title: string;
-  tagline: string;
-  summary: string;
-}
-
-const { title, tagline, summary } = Astro.props;
+const en = tr.en;
+const de = tr.de;
 ---
 
 <header class="hero">
   <div class="hero-toggle">
+    <LangToggle />
     <ThemeToggle />
   </div>
   <div class="container">
     <div class="hero-grid">
       <div class="hero-content">
-        <p class="hero-eyebrow">Software Engineer & DevOps</p>
-        <h1>{title}</h1>
-        <p class="hero-tagline">{tagline}</p>
-        <p class="hero-summary">{summary}</p>
+        <p class="hero-eyebrow">
+          <span data-lang="en">{en.heroEyebrow}</span>
+          <span data-lang="de">{de.heroEyebrow}</span>
+        </p>
+        <h1>{en.heroTitle}</h1>
+        <p class="hero-tagline">
+          <span data-lang="en">{en.heroTagline}</span>
+          <span data-lang="de">{de.heroTagline}</span>
+        </p>
+        <p class="hero-summary">
+          <span data-lang="en">{en.heroSummary}</span>
+          <span data-lang="de">{de.heroSummary}</span>
+        </p>
         <div class="hero-actions">
-          <a href="#experience" class="button button-primary">View experience</a>
-          <a href="#contact" class="button button-secondary">Get in touch</a>
+          <a href="#experience" class="button button-primary" data-lang-pair>
+            <span data-lang="en">{en.heroCtaExperience}</span>
+            <span data-lang="de">{de.heroCtaExperience}</span>
+          </a>
+          <a href="#contact" class="button button-secondary" data-lang-pair>
+            <span data-lang="en">{en.heroCtaContact}</span>
+            <span data-lang="de">{de.heroCtaContact}</span>
+          </a>
         </div>
       </div>
       <div class="hero-visual" aria-hidden="true">
@@ -37,10 +50,15 @@ const { title, tagline, summary } = Astro.props;
           <div class="terminal-body">
             <p><span class="terminal-prompt">$</span> whoami</p>
             <p class="terminal-output">herbert_nikolajewski</p>
-            <p><span class="terminal-prompt">$</span> current_focus</p>
+            <p data-lang="en"><span class="terminal-prompt">$</span> {en.terminalCurrentFocus}</p>
+            <p data-lang="de"><span class="terminal-prompt">$</span> {de.terminalCurrentFocus}</p>
             <p class="terminal-output">self-hosted infrastructure, k8s, terraform</p>
-            <p><span class="terminal-prompt">$</span> location</p>
-            <p class="terminal-output">regensburg, germany · remote/hybrid</p>
+            <p data-lang="en"><span class="terminal-prompt">$</span> {en.terminalLocation}</p>
+            <p data-lang="de"><span class="terminal-prompt">$</span> {de.terminalLocation}</p>
+            <p class="terminal-output">
+              <span data-lang="en">{en.terminalLocationValue}</span>
+              <span data-lang="de">{de.terminalLocationValue}</span>
+            </p>
             <p><span class="terminal-prompt">$</span> <span class="terminal-cursor">_</span></p>
           </div>
         </div>

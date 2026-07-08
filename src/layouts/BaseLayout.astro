@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import { AUTHOR, SITE_URL, SOCIAL_LINKS } from '../config';
+import { translations } from '../i18n/translations';
 
 interface Props {
   title: string;
@@ -11,6 +12,7 @@ interface Props {
 const { title, description, ogImage = '/og-image.png' } = Astro.props;
 const canonicalUrl = Astro.url.href;
 const siteUrl = Astro.site?.origin ?? SITE_URL;
+const tr = translations;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -30,7 +32,7 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -38,6 +40,7 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
     <meta name="description" content={description} />
     <meta name="author" content={AUTHOR.name} />
     <meta name="theme-color" content="#0a0a0a" />
+    <meta http-equiv="Content-Language" content="de,en" />
     <meta
       http-equiv="Content-Security-Policy"
       content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self';"
@@ -45,6 +48,7 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
 
     <script is:inline>
       (function () {
+        // Theme
         const stored = localStorage.getItem('theme');
         const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         const theme = stored || (prefersLight ? 'light' : 'dark');
@@ -52,6 +56,15 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
         document
           .querySelector('meta[name="theme-color"]')
           ?.setAttribute('content', theme === 'light' ? '#f5f5f5' : '#0a0a0a');
+
+        // Language (defaults to de, auto-switch to en if navigator.language starts with en)
+        const storedLang = localStorage.getItem('lang');
+        let lang = storedLang;
+        if (lang !== 'de' && lang !== 'en') {
+          const navLang = (navigator.language || '').toLowerCase();
+          lang = navLang.startsWith('en') ? 'en' : 'de';
+        }
+        document.documentElement.lang = lang;
       })();
     </script>
 
@@ -84,7 +97,10 @@ const safeStructuredData = JSON.stringify(structuredData).replace(/</g, '\\u003c
     </noscript>
   </head>
   <body>
-    <a href="#main" class="skip-link">Skip to content</a>
+    <a href="#main" class="skip-link">
+      <span data-lang="en">{tr.en.skipLink}</span>
+      <span data-lang="de">{tr.de.skipLink}</span>
+    </a>
     <slot />
 
     <script>

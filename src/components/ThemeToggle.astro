@@ -1,5 +1,9 @@
 ---
-const label = 'Switch between light and dark theme';
+import { translations as tr } from '../i18n/translations';
+
+const label = tr.en.themeSwitchGeneric;
+const en = tr.en;
+const de = tr.de;
 ---
 
 <button
@@ -47,7 +51,10 @@ const label = 'Switch between light and dark theme';
     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
   </svg>
 
-  <span class="theme-toggle-label">Theme</span>
+  <span class="theme-toggle-label">
+    <span data-lang="en">{en.themeLabel}</span>
+    <span data-lang="de">{de.themeLabel}</span>
+  </span>
 </button>
 
 <script>
@@ -70,17 +77,22 @@ const label = 'Switch between light and dark theme';
         metaThemeColor.setAttribute('content', theme === 'light' ? '#f5f5f5' : '#0a0a0a');
       }
 
-      button.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
-      button.setAttribute(
-        'aria-label',
-        theme === 'dark' ? 'Switch to light theme' : 'Switch to dark theme'
-      );
+      button!.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
+      const tr = lang === 'en' ? {
+        toLight: 'Switch to light theme',
+        toDark: 'Switch to dark theme',
+      } : {
+        toLight: 'Zur hellen Darstellung wechseln',
+        toDark: 'Zur dunklen Darstellung wechseln',
+      };
+      button!.setAttribute('aria-label', theme === 'dark' ? tr.toLight : tr.toDark);
     }
 
     // Sync button state with the theme set by the inline head script
     applyTheme(getCurrentTheme());
 
-    button.addEventListener('click', () => {
+    button!.addEventListener('click', () => {
       const nextTheme = getCurrentTheme() === 'dark' ? 'light' : 'dark';
       applyTheme(nextTheme);
     });

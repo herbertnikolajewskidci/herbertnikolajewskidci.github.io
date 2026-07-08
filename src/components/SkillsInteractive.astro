@@ -1,16 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
+import { translations as tr } from '../i18n/translations';
 
 const skillsEntries = await getCollection('skills');
 const skillsEntry = skillsEntries[0];
 // The file loader returns the JSON root array directly as `data`.
 const categories = (skillsEntry?.data as any) ?? [];
 
-const levelLabels: Record<string, string> = {
-  production: 'In production',
-  teaching: 'Taught & used',
-  experimental: 'Experimenting',
-};
+const levelLabelsEn = tr.en.skillLevels;
+const levelLabelsDe = tr.de.skillLevels;
 
 const tagGroupMap: Record<string, string> = {
   TypeScript: 'frontend',
@@ -39,28 +37,43 @@ const tagGroupMap: Record<string, string> = {
   Agile: 'other',
 };
 
-const groupLabels: Record<string, string> = {
-  all: 'All',
-  devops: 'DevOps',
-  frontend: 'Frontend',
-  backend: 'Backend',
-  other: 'Other',
+const groups = ['all', 'devops', 'frontend', 'backend', 'other'] as const;
+type Group = (typeof groups)[number];
+
+const filterLabelsEn: Record<Group, string> = {
+  all: tr.en.skillsFilterAll,
+  devops: tr.en.skillsFilterDevOps,
+  frontend: tr.en.skillsFilterFrontend,
+  backend: tr.en.skillsFilterBackend,
+  other: tr.en.skillsFilterOther,
 };
 
-const groups = ['all', 'devops', 'frontend', 'backend', 'other'];
-const initialFilter = 'all';
+const filterLabelsDe: Record<Group, string> = {
+  all: tr.de.skillsFilterAll,
+  devops: tr.de.skillsFilterDevOps,
+  frontend: tr.de.skillsFilterFrontend,
+  backend: tr.de.skillsFilterBackend,
+  other: tr.de.skillsFilterOther,
+};
 
+const initialFilter = 'all';
 const totalSkills = categories.reduce((sum: number, category: any) => sum + category.items.length, 0);
 ---
 
 <section id="skills" class="section">
   <div class="container">
     <div class="section-header reveal">
-      <p class="section-eyebrow">Toolkit</p>
-      <h2>Skills & Technologies</h2>
+      <p class="section-eyebrow">
+        <span data-lang="en">{tr.en.skillsEyebrow}</span>
+        <span data-lang="de">{tr.de.skillsEyebrow}</span>
+      </p>
+      <h2>
+        <span data-lang="en">{tr.en.skillsHeading}</span>
+        <span data-lang="de">{tr.de.skillsHeading}</span>
+      </h2>
     </div>
 
-    <div class="skills-filter reveal" role="group" aria-label="Filter skills by area">
+    <div class="skills-filter reveal" role="group" aria-label={tr.en.skillsFilterAria}>
       {
         groups.map((group) => (
           <button
@@ -68,27 +81,40 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
             class={`filter-button${group === initialFilter ? ' is-active' : ''}`}
             data-filter={group}
             aria-pressed={group === initialFilter ? 'true' : 'false'}
+            data-lang-pair
           >
-            {groupLabels[group]}
+            <span data-lang="en">{filterLabelsEn[group]}</span>
+            <span data-lang="de">{filterLabelsDe[group]}</span>
           </button>
         ))
       }
     </div>
 
     <p class="skills-status" aria-live="polite" aria-atomic="true">
-      Showing <strong>{totalSkills}</strong> skills
+      <span data-lang="en">
+        Showing <strong>{totalSkills}</strong> skills
+      </span>
+      <span data-lang="de">
+        Zeige <strong>{totalSkills}</strong> Fähigkeiten
+      </span>
     </p>
 
     <div class="skills-list">
       {
         categories.map((category: any, categoryIndex: number) => (
           <div class="skill-category reveal" style={`--item-index: ${categoryIndex}`}>
-            <h3>{category.category}</h3>
+            <h3>
+              <span data-lang="en">{tr.en.skillCategories[category.category] ?? category.category}</span>
+              <span data-lang="de">{tr.de.skillCategories[category.category] ?? category.category}</span>
+            </h3>
             <ul class="skill-tags">
               {category.items.map((item: any) => (
                 <li class="skill-tag" data-level={item.level} data-group={tagGroupMap[item.name]}>
                   <span class="skill-name">{item.name}</span>
-                  <span class="skill-level">{levelLabels[item.level]}</span>
+                  <span class="skill-level" data-lang-pair>
+                    <span data-lang="en">{levelLabelsEn[item.level]}</span>
+                    <span data-lang="de">{levelLabelsDe[item.level]}</span>
+                  </span>
                 </li>
               ))}
             </ul>
@@ -103,16 +129,44 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
     const tags = document.querySelectorAll<HTMLLIElement>('.skill-tag');
     const status = document.querySelector<HTMLParagraphElement>('.skills-status');
 
-    function updateStatus(visibleCount: number, totalCount: number, filterLabel: string) {
+    const FILTER_LABELS: Record<string, { en: string; de: string }> = {
+      all: { en: 'all', de: 'alle' },
+      devops: { en: 'devops', de: 'devops' },
+      frontend: { en: 'frontend', de: 'frontend' },
+      backend: { en: 'backend', de: 'backend' },
+      other: { en: 'other', de: 'sonstige' },
+    };
+
+    function renderStatus(visibleCount: number, totalCount: number, filter: string) {
       if (!status) return;
-      const label = filterLabel === 'All' ? 'all skills' : `${filterLabel.toLowerCase()} skills`;
-      status.textContent = `Showing ${visibleCount} of ${totalCount} ${label}`;
+      const labels = FILTER_LABELS[filter] ?? FILTER_LABELS.all;
+      const lang = document.documentElement.lang === 'en' ? 'en' : 'de';
+      status.innerHTML =
+        lang === 'en'
+          ? `Showing <strong>${visibleCount}</strong> of ${totalCount} ${labels.en} skills`
+          : `Zeige <strong>${visibleCount}</strong> von ${totalCount} ${labels.de} ${
+              filter === 'all' ? 'Fähigkeiten' : 'Fähigkeiten'
+            }`;
+    }
+
+    function updateActiveFilterVisuals() {
+      // Re-render status with currently active filter
+      const activeButton = document.querySelector<HTMLButtonElement>('.filter-button.is-active');
+      const activeFilter = activeButton?.dataset.filter ?? 'all';
+      let visible = 0;
+      tags.forEach((tag) => {
+        if (!tag.classList.contains('is-hidden')) visible++;
+      });
+      renderStatus(visible, tags.length, activeFilter);
+    }
+
+    function refilterWithCurrentLang() {
+      updateActiveFilterVisuals();
     }
 
     buttons.forEach((button) => {
       button.addEventListener('click', () => {
         const filter = button.dataset.filter ?? 'all';
-        const filterLabel = button.textContent?.trim() ?? 'All';
 
         buttons.forEach((btn) => {
           const isSelected = btn === button;
@@ -121,7 +175,6 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
         });
 
         let visibleCount = 0;
-
         tags.forEach((tag) => {
           const group = tag.dataset.group ?? '';
           const matches = filter === 'all' || group === filter;
@@ -130,8 +183,13 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
           if (matches) visibleCount++;
         });
 
-        updateStatus(visibleCount, tags.length, filterLabel);
+        renderStatus(visibleCount, tags.length, filter);
       });
+    });
+
+    // Re-render status when language changes (because text is set by JS, not CSS toggled)
+    document.addEventListener('langchange', () => {
+      refilterWithCurrentLang();
     });
   </script>
 </section>

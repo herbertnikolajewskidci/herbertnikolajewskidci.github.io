@@ -1,0 +1,126 @@
+---
+import { translations } from '../i18n/translations';
+
+const en = translations.en;
+const de = translations.de;
+---
+
+<div class="lang-toggle" data-lang-toggle>
+  <button
+    type="button"
+    class="lang-toggle-btn"
+    data-lang-option="de"
+    aria-pressed="true"
+    aria-label={de.langSwitchToDe}
+  >
+    <span aria-hidden="true">DE</span>
+  </button>
+  <span class="lang-toggle-sep" aria-hidden="true">/</span>
+  <button
+    type="button"
+    class="lang-toggle-btn"
+    data-lang-option="en"
+    aria-pressed="false"
+    aria-label={en.langSwitchToEn}
+  >
+    <span aria-hidden="true">EN</span>
+  </button>
+  <span class="lang-toggle-label">{en.langLabel}</span>
+</div>
+
+<script>
+  (function () {
+    const STORAGE_KEY = 'lang';
+    const root = document.documentElement;
+    const buttons = document.querySelectorAll<HTMLButtonElement>('[data-lang-option]');
+
+    function currentLang(): 'de' | 'en' {
+      return root.lang === 'en' ? 'en' : 'de';
+    }
+
+    function applyLang(lang: 'de' | 'en') {
+      root.lang = lang;
+      localStorage.setItem(STORAGE_KEY, lang);
+      buttons.forEach((btn) => {
+        const isActive = btn.dataset.langOption === lang;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+      });
+      document.dispatchEvent(new CustomEvent('langchange', { detail: { lang } }));
+    }
+
+    // Sync button state with the html lang set by the inline head script
+    applyLang(currentLang());
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const next = (btn.dataset.langOption === 'en' ? 'en' : 'de') as 'de' | 'en';
+        if (next !== currentLang()) applyLang(next);
+      });
+    });
+  })();
+</script>
+
+<style>
+  .lang-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    background-color: var(--color-surface-elevated);
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-md);
+    color: var(--color-text-muted);
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .lang-toggle:hover {
+    border-color: var(--color-accent);
+    color: var(--color-accent);
+  }
+
+  .lang-toggle-btn {
+    appearance: none;
+    background: transparent;
+    border: 0;
+    padding: 0;
+    color: inherit;
+    font: inherit;
+    cursor: pointer;
+    opacity: 0.55;
+    transition: opacity var(--transition-fast), color var(--transition-fast);
+  }
+
+  .lang-toggle-btn:hover {
+    opacity: 1;
+  }
+
+  .lang-toggle-btn[aria-pressed='true'] {
+    opacity: 1;
+    color: var(--color-accent);
+  }
+
+  .lang-toggle-sep {
+    opacity: 0.4;
+    user-select: none;
+  }
+
+  .lang-toggle-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>

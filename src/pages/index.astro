@@ -7,15 +7,15 @@ import SkillsInteractive from '../components/SkillsInteractive.astro';
 import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import { SITE_TITLE, SITE_DESCRIPTION } from '../config';
+
+// SEO: default lang is de (rendered in HTML). Locals switch via toggle.
+const title = SITE_TITLE;
+const description = SITE_DESCRIPTION;
 ---
 
-<BaseLayout title={SITE_TITLE} description={SITE_DESCRIPTION}>
+<BaseLayout title={title} description={description}>
   <main id="main">
-    <Hero
-      title="Herbert Nikolajewski"
-      tagline="I build software and the infrastructure it runs on."
-      summary="Full-stack developer with a DevOps focus. I like making systems that are fast, maintainable, and cost-effective — from TypeScript frontends to self-hosted Kubernetes clusters. Recent wins include cutting cloud spend by 90%+ and migrating production workloads to Hetzner. Based in Regensburg, Germany."
-    />
+    <Hero />
 
     <ExperienceTimeline />
 

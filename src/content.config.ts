@@ -5,14 +5,18 @@ const experience = defineCollection({
   loader: glob({ pattern: '**/[^_]*.md', base: './src/content/experience' }),
   schema: z.object({
     role: z.string(),
+    roleDe: z.string().optional(),
     company: z.string(),
     location: z.string(),
+    locationDe: z.string().optional(),
     date: z.string(),
+    dateDe: z.string().optional(),
     dateStart: z.string().optional(),
     dateEnd: z.string().optional(),
     employmentType: z.enum(['Full-time', 'Part-time', 'Freelance', 'Contract']).default('Full-time'),
     order: z.number(),
     highlights: z.array(z.string()),
+    highlightsDe: z.array(z.string()).optional(),
   }),
 });
 

@@ -1,16 +1,25 @@
 ---
 import { LEGAL } from '../config';
+import { translations as tr } from '../i18n/translations';
 
 const year = new Date().getFullYear();
+const en = tr.en;
+const de = tr.de;
 ---
 
 <footer class="footer">
   <div class="container footer-inner">
     <p>© {year} Herbert Nikolajewski</p>
-    <nav aria-label="Legal">
-      <a href={LEGAL.imprintUrl}>Impressum</a>
+    <nav aria-label={en.footerLegalNav}>
+      <a href={LEGAL.imprintUrl}>
+        <span data-lang="en">{en.footerImprint}</span>
+        <span data-lang="de">{de.footerImprint}</span>
+      </a>
       <span aria-hidden="true">·</span>
-      <a href={LEGAL.privacyUrl}>Datenschutz</a>
+      <a href={LEGAL.privacyUrl}>
+        <span data-lang="en">{en.footerPrivacy}</span>
+        <span data-lang="de">{de.footerPrivacy}</span>
+      </a>
     </nav>
   </div>
 </footer>

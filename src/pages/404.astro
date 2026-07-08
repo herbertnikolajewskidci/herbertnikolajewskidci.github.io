@@ -1,22 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { SITE_TITLE } from '../config';
+import { translations as tr } from '../i18n/translations';
 
-const title = `Page not found · ${SITE_TITLE}`;
-const description = 'The page you are looking for does not exist.';
+const en = tr.en;
+const de = tr.de;
+const titleEn = en.error404Title(SITE_TITLE);
+const titleDe = de.error404Title(SITE_TITLE);
+const descriptionEn = en.error404Meta;
+const descriptionDe = de.error404Meta;
+
+// SEO default = DE
+const title = titleDe;
+const description = descriptionDe;
 ---
 
 <BaseLayout title={title} description={description}>
   <main id="main" class="error-page">
     <div class="container">
       <p class="error-code">404</p>
-      <h1>Page not found</h1>
+      <h1 data-lang-pair>
+        <span data-lang="en">{en.error404Heading}</span>
+        <span data-lang="de">{de.error404Heading}</span>
+      </h1>
       <p class="error-message">
-        The page you are looking for does not exist or has been moved.
+        <span data-lang="en">{en.error404Message}</span>
+        <span data-lang="de">{de.error404Message}</span>
       </p>
-      <a href="/" class="button button-primary">Back to home</a>
+      <a href="/" class="button button-primary" data-lang-pair>
+        <span data-lang="en">{en.error404Back}</span>
+        <span data-lang="de">{de.error404Back}</span>
+      </a>
     </div>
   </main>
+
+  <script define:vars={{ titleEn, titleDe, descriptionEn, descriptionDe }}>
+    document.addEventListener('langchange', (e) => {
+      const lang = e.detail?.lang ?? 'de';
+      document.title = lang === 'en' ? titleEn : titleDe;
+      const meta = document.querySelector('meta[name="description"]');
+      if (meta) meta.setAttribute('content', lang === 'en' ? descriptionEn : descriptionDe);
+    });
+  </script>
 </BaseLayout>
 
 <style>

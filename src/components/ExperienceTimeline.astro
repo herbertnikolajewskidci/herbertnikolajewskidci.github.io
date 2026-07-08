@@ -1,5 +1,6 @@
 ---
 import { getCollection } from 'astro:content';
+import { translations as tr } from '../i18n/translations';
 
 let entries: Awaited<ReturnType<typeof getCollection<'experience'>>> = [];
 let loadError = false;
@@ -12,19 +13,28 @@ try {
 }
 
 const sortedEntries = entries.sort((a, b) => a.data.order - b.data.order);
+const en = tr.en;
+const de = tr.de;
 ---
 
 <section id="experience" class="section section-muted">
   <div class="container">
     <div class="section-header reveal">
-      <p class="section-eyebrow">Career</p>
-      <h2>Experience</h2>
+      <p class="section-eyebrow">
+        <span data-lang="en">{en.experienceEyebrow}</span>
+        <span data-lang="de">{de.experienceEyebrow}</span>
+      </p>
+      <h2>
+        <span data-lang="en">{en.experienceHeading}</span>
+        <span data-lang="de">{de.experienceHeading}</span>
+      </h2>
     </div>
 
     {
       loadError ? (
         <p class="timeline-error">
-          Work history is temporarily unavailable. Please check back later or contact me directly.
+          <span data-lang="en">{en.experienceError}</span>
+          <span data-lang="de">{de.experienceError}</span>
         </p>
       ) : (
         <div class="timeline">
@@ -39,20 +49,36 @@ const sortedEntries = entries.sort((a, b) => a.data.order - b.data.order);
                 <div class="timeline-content">
                   <header class="timeline-header">
                     <div>
-                      <h3>{entry.data.role}</h3>
+                      <h3>
+                        <span data-lang="en">{entry.data.role}</span>
+                        <span data-lang="de">{entry.data.roleDe ?? entry.data.role}</span>
+                      </h3>
                       <p class="timeline-company">
                         {entry.data.company}
-                        <span class="timeline-type">· {entry.data.employmentType}</span>
+                        <span class="timeline-type">
+                          {'· '}
+                          <span data-lang="en">{en.employmentTypes[entry.data.employmentType] ?? entry.data.employmentType}</span>
+                          <span data-lang="de">{de.employmentTypes[entry.data.employmentType] ?? entry.data.employmentType}</span>
+                        </span>
                       </p>
                     </div>
                     <time class="timeline-date" datetime={dateTimeAttr}>
-                      {entry.data.date}
+                      <span data-lang="en">{entry.data.date}</span>
+                      <span data-lang="de">{entry.data.dateDe ?? entry.data.date}</span>
                     </time>
                   </header>
-                  <p class="timeline-location">{entry.data.location}</p>
+                  <p class="timeline-location">
+                    <span data-lang="en">{entry.data.location}</span>
+                    <span data-lang="de">{entry.data.locationDe ?? entry.data.location}</span>
+                  </p>
                   <div class="timeline-body">
-                    <ul>
+                    <ul data-lang="en">
                       {entry.data.highlights.map((highlight) => (
+                        <li>{highlight}</li>
+                      ))}
+                    </ul>
+                    <ul data-lang="de">
+                      {(entry.data.highlightsDe ?? entry.data.highlights).map((highlight) => (
                         <li>{highlight}</li>
                       ))}
                     </ul>
