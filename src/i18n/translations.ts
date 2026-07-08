@@ -14,7 +14,7 @@ export const translations = {
     langSwitchToEn: 'Switch to English',
     langSwitchToDe: 'Switch to German',
 
-    heroEyebrow: 'Software Engineer & DevOps',
+    heroEyebrow: '// Software Engineer & DevOps',
     heroTitle: 'Herbert Nikolajewski',
     heroTagline: 'I build software and the infrastructure it runs on.',
     heroSummary:
@@ -26,7 +26,7 @@ export const translations = {
     terminalLocation: 'location',
     terminalLocationValue: 'regensburg, germany · remote/hybrid',
 
-    experienceEyebrow: 'Career',
+    experienceEyebrow: '// Career',
     experienceHeading: 'Experience',
     experienceError:
       'Work history is temporarily unavailable. Please check back later or contact me directly.',
@@ -38,7 +38,7 @@ export const translations = {
       Contract: 'Contract',
     } as Record<string, string>,
 
-    skillsEyebrow: 'Toolkit',
+    skillsEyebrow: '// Toolkit',
     skillsHeading: 'Skills & Technologies',
     skillsFilterAll: 'All',
     skillsFilterDevOps: 'DevOps',
@@ -63,7 +63,7 @@ export const translations = {
       Other: 'Other',
     } as Record<string, string>,
 
-    contactEyebrow: 'Contact',
+    contactEyebrow: '// Contact',
     contactHeading: "Let's build something solid.",
     contactAvailability:
       'Open for full-stack and DevOps roles from August 2026.',
@@ -112,7 +112,7 @@ export const translations = {
     langSwitchToEn: 'Auf Englisch wechseln',
     langSwitchToDe: 'Auf Deutsch wechseln',
 
-    heroEyebrow: 'Software Engineer & DevOps',
+    heroEyebrow: '// Software Engineer & DevOps',
     heroTitle: 'Herbert Nikolajewski',
     heroTagline:
       'Ich baue Software und die Infrastruktur, auf der sie läuft.',
@@ -125,7 +125,7 @@ export const translations = {
     terminalLocation: 'standort',
     terminalLocationValue: 'regensburg, deutschland · remote/hybrid',
 
-    experienceEyebrow: 'Werdegang',
+    experienceEyebrow: '// Werdegang',
     experienceHeading: 'Berufserfahrung',
     experienceError:
       'Der Werdegang ist derzeit nicht verfügbar. Bitte später zurückkommen oder direkt Kontakt aufnehmen.',
@@ -137,7 +137,7 @@ export const translations = {
       Contract: 'Projekt',
     } as Record<string, string>,
 
-    skillsEyebrow: 'Werkzeuge',
+    skillsEyebrow: '// Werkzeuge',
     skillsHeading: 'Fähigkeiten & Technologien',
     skillsFilterAll: 'Alle',
     skillsFilterDevOps: 'DevOps',
@@ -162,7 +162,7 @@ export const translations = {
       Other: 'Sonstige',
     } as Record<string, string>,
 
-    contactEyebrow: 'Kontakt',
+    contactEyebrow: '// Kontakt',
     contactHeading: 'Lass uns etwas Solides bauen.',
     contactAvailability:
       'Offen für Full-Stack- und DevOps-Rollen ab August 2026.',

@@ -190,10 +190,11 @@ h3 {
   display: inline-block;
   margin-bottom: 0.75rem;
   color: var(--color-accent);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
 }
 
 /* Buttons */
@@ -277,10 +278,11 @@ h3 {
 
 .hero-eyebrow {
   color: var(--color-accent);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0;
+  text-transform: none;
   margin-bottom: 1rem;
 }
 
