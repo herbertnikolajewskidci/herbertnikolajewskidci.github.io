@@ -16,9 +16,9 @@ export const translations = {
 
     heroEyebrow: '// Software Engineer & DevOps',
     heroTitle: 'Herbert Nikolajewski',
-    heroTagline: 'I build software and the infrastructure it runs on.',
+    heroTagline: 'Software and the infrastructure it runs on.',
     heroSummary:
-      "Full-stack developer with a DevOps focus. I like making systems that are fast, maintainable, and cost-effective — from TypeScript frontends to self-hosted Kubernetes clusters. Recent wins include cutting cloud spend by 90%+ and migrating production workloads to Hetzner. Based in Regensburg, Germany.",
+      'Full-stack with a DevOps focus. Based in Regensburg. Since 2020 I build distributed systems — first client-facing web platforms on Node.js, now self-hosted Hetzner infrastructure running 200+ sites and a GPU LLM server. Recent migration cut cloud spend by 90%+.',
     heroCtaExperience: 'View experience',
     heroCtaContact: 'Get in touch',
 
@@ -115,9 +115,9 @@ export const translations = {
     heroEyebrow: '// Software Engineer & DevOps',
     heroTitle: 'Herbert Nikolajewski',
     heroTagline:
-      'Ich baue Software und die Infrastruktur, auf der sie läuft.',
+      'Software und die Infrastruktur, auf der sie läuft.',
     heroSummary:
-      'Full-Stack-Entwickler mit DevOps-Schwerpunkt. Ich baue Systeme, die schnell, wartbar und kosteneffizient sind — von TypeScript-Frontends bis zu selbstgehosteten Kubernetes-Clustern. Zuletzt Cloud-Ausgaben um 90%+ gesenkt und Produktions-Workloads zu Hetzner migriert. Sitz in Regensburg, Deutschland.',
+      'Full-Stack mit DevOps-Schwerpunkt. Sitz in Regensburg. Seit 2020 baue ich verteilte Systeme — zuerst klient-orientierte Web-Plattformen auf Node.js, heute selbstgehostete Hetzner-Infrastruktur für 200+ Sites und einen GPU-LLM-Server. Letzte Migration senkte Cloud-Ausgaben um 90%+.',
     heroCtaExperience: 'Werdegang ansehen',
     heroCtaContact: 'Kontakt aufnehmen',
 
