@@ -19,7 +19,7 @@ const de = tr.de;
 
 <section id="experience" class="section section-muted">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="section-header">
       <p class="section-eyebrow">
         <span data-lang="en">{en.experienceEyebrow}</span>
         <span data-lang="de">{de.experienceEyebrow}</span>
@@ -44,7 +44,7 @@ const de = tr.de;
               : `${entry.data.dateStart}/present`;
 
             return (
-              <article class="timeline-item reveal" style={`--item-index: ${index}`}>
+              <article class="timeline-item" style={`--item-index: ${index}`}>
                 <div class="timeline-marker" aria-hidden="true" />
                 <div class="timeline-content">
                   <header class="timeline-header">

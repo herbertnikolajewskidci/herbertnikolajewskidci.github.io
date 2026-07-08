@@ -62,7 +62,7 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
 
 <section id="skills" class="section">
   <div class="container">
-    <div class="section-header reveal">
+    <div class="section-header">
       <p class="section-eyebrow">
         <span data-lang="en">{tr.en.skillsEyebrow}</span>
         <span data-lang="de">{tr.de.skillsEyebrow}</span>
@@ -73,7 +73,7 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
       </h2>
     </div>
 
-    <div class="skills-filter reveal" role="group" aria-label={tr.en.skillsFilterAria}>
+    <div class="skills-filter" role="group" aria-label={tr.en.skillsFilterAria}>
       {
         groups.map((group) => (
           <button
@@ -97,7 +97,7 @@ const totalSkills = categories.reduce((sum: number, category: any) => sum + cate
     <div class="skills-list">
       {
         categories.map((category: any, categoryIndex: number) => (
-          <div class="skill-category reveal" style={`--item-index: ${categoryIndex}`}>
+          <div class="skill-category" style={`--item-index: ${categoryIndex}`}>
             <h3>
               <span data-lang="en">{tr.en.skillCategories[category.category] ?? category.category}</span>
               <span data-lang="de">{tr.de.skillCategories[category.category] ?? category.category}</span>
